@@ -51,17 +51,6 @@
     }
 
     h2 { margin-top: 0; }
-
-    img.avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-      margin: 0 auto 15px;
-      border: 1px solid #ccc;
-    }
-
     ul { padding-left: 18px; }
     a { color: #0a66c2; }
   </style>
@@ -85,18 +74,17 @@
 
   <!-- ABOUT -->
   <section class="section" id="about">
-    <img class="avatar" src="assets/headshot.jpg" alt="Headshot">
     <h2>About Me</h2>
     <p>
       I am an undergraduate student at <strong>Purdue University</strong> majoring in
       <strong>Computer Science</strong> with a minor in Mathematics (GPA: 3.89).  
       My research focuses on developing <strong>robust learning algorithms</strong>, 
-      <strong>meta-learned optimizers</strong>, and <strong>scalable model architectures</strong> that
-      enable deep neural networks to train more efficiently and generalize better.
+      <strong>meta-learned optimizers</strong>, and <strong>scalable architectures</strong> that improve 
+      the stability, generalization, and efficiency of deep neural networks.
     </p>
     <p>
-      I work at the intersection of optimization, meta-learning, and foundation models, with applications in 
-      <strong>LLMs</strong>, <strong>vision-language models</strong>, and <strong>scientific ML</strong>.
+      I am broadly interested in optimization for deep learning, learning-to-optimize, meta-learning, 
+      and training dynamics for large-scale models such as LLMs and multimodal systems.
     </p>
     <p>
       I am currently seeking <strong>PhD positions for Fall 2026</strong>.
@@ -110,31 +98,66 @@
     <h3>Research Assistant — nanoHUB, Purdue University (Jan 2024 – Present)</h3>
     <ul>
       <li>Co-authored <strong>nanoHUB AURA</strong>, an LLM-powered scientific research assistant leveraging multi-agent architectures and access to 1M+ simulations/tools.</li>
-      <li>Applied active learning to materials discovery, achieving a <strong>10× reduction in compute</strong> for screening tasks (published in Computational Materials Science).</li>
-      <li>Specialized GPT and Llama models for scientific querying, simulation automation, and interaction with domain-specific tools.</li>
+      <li>Applied active learning to materials discovery, achieving a <strong>10× reduction in compute</strong> for materials screening (published in Computational Materials Science).</li>
+      <li>Adapted GPT and Llama LLMs to execute scientific workflows, query datasets, and run simulations from natural language prompts.</li>
     </ul>
 
-    <h3>CS 592 — Reinforcement Learning (Class Project, 2024–2025)</h3>
+    <h3>CS 592 — Reinforcement Learning (2024–2025)</h3>
     <ul>
-      <li>Developed a <strong>Zeroeth-Order optimizer</strong> using CMA-ES for neural networks, outperforming traditional optimizers during initial training.</li>
+      <li>
+        Developed a <strong>zeroeth-order optimizer</strong> using Covariance Matrix Adaptation Evolution Strategy (CMA-ES) for <strong>neural network warmup</strong>.  
+        This optimizer significantly outperforms SGD in early-stage training, particularly in <strong>highly nonconvex</strong> and <strong>noisy</strong> optimization landscapes where gradient signals are unstable.  
+        Demonstrated improved convergence and robustness during initial training phases of deep networks.
+      </li>
     </ul>
 
     <h3>CS 577 — Natural Language Processing (2025–Present)</h3>
     <ul>
-      <li>Fine-tuned <strong>learned optimizers</strong> for LLM pre-training using PEFT methods such as LoRA.</li>
+      <li>
+        Adapted <strong>learned optimizers</strong> specifically for <strong>LLM pre-training</strong>.  
+        By restricting the training distribution to LLM-style tasks and architectures, we meta-train a learned optimizer that <strong>outperforms Adam</strong> on small language models.  
+        Demonstrated that task-specialization of learned optimizers improves stability and performance.
+      </li>
     </ul>
 
     <h3>CS 573 — Data Mining (2025–Present)</h3>
     <ul>
-      <li>Integrated <strong>Sharpness-Aware Minimization (SAM)</strong> into the training of learned optimizers to improve cross-architecture and cross-dataset robustness.</li>
+      <li>
+        Integrated <strong>Sharpness-Aware Minimization (SAM)</strong> into the training loop of learned optimizers to address core instability challenges in meta-learning.  
+        Learned optimizers often overfit to specific architectures, datasets, or initialization distributions, limiting generalization.  
+        Using SAM, we enforce updates that favor <strong>flatter minima</strong>, improving robustness under distribution shift.
+      </li>
+
+      <li>
+        Built a meta-training pipeline that trains learned optimizers on diverse tasks (varying architectures, datasets, and initializations) while perturbing the optimization landscape using SAM-inspired worst-direction sharpening.  
+        This reduces collapse modes and improves cross-task transfer ability.
+      </li>
+
+      <li>
+        Demonstrated substantial improvements in:
+        <ul>
+          <li><strong>zero-shot transfer</strong> to unseen datasets,</li>
+          <li><strong>robustness</strong> to initialization noise,</li>
+          <li><strong>generalization</strong> to new architectures, such as CNNs and small transformers.</li>
+        </ul>
+      </li>
+
+      <li>
+        This work is motivated directly by my broader interest in <strong>stable, self-refining optimizers</strong> and connects to instability issues described in my SoP — specifically the brittleness of current deep learning optimization with respect to hyperparameters, architecture, and scale.
+      </li>
+
+      <li>
+        This project is ongoing and aims to produce learned optimizers that scale more gracefully than existing approaches, ultimately contributing to the training of <strong>large-scale models</strong> where traditional optimization often fails.
+      </li>
     </ul>
 
     <h3>Research Themes</h3>
     <p>
-      My work is motivated by instability in modern deep learning optimization pipelines and the need for 
-      <strong>scalable, self-improving learning algorithms</strong>.  
-      I’m especially interested in optimizers for large-scale models, LLM reasoning dynamics, 
-      and the interplay between architecture and optimization.
+      My work is motivated by instability in modern deep learning pipelines and the need for 
+      <strong>self-improving, scalable optimization algorithms</strong>.  
+      I aim to develop techniques that integrate meta-learning, large-scale optimization, and 
+      architectural design to build the next generation of optimizers and training systems for 
+      foundation models.
     </p>
   </section>
 
@@ -142,13 +165,13 @@
   <section class="section" id="projects">
     <h2>Projects</h2>
     <ul>
-      <li><strong>nanoHUB AURA</strong> — Large-scale LLM-powered scientific assistant system; released as a <strong>ChemRxiv preprint</strong>. Uses multi-agent architectures and dynamically growing datasets to support physics, materials science, and simulation workflows.</li>
+      <li><strong>nanoHUB AURA</strong> — Large-scale LLM-powered scientific assistant; released as a <strong>ChemRxiv preprint</strong>. Uses multi-agent systems and physics-based simulation workflows to assist researchers at scale.</li>
 
-      <li><strong>Zeroeth-Order Neural Optimizer</strong> — Implemented CMA-ES–based training algorithm achieving faster initial optimization than Adam/SGD; demonstrated effectiveness for non-smooth neural loss landscapes.</li>
+      <li><strong>Zeroeth-Order Neural Optimizer</strong> — CMA-ES–based warmup optimizer outperforming SGD in early training for noisy, nonconvex landscapes.</li>
 
-      <li><strong>Robust Learned Optimizers with SAM</strong> — Integrated SAM into meta-optimizer training to address optimizer collapse and improve generalization across datasets and model architectures.</li>
+      <li><strong>SAM-Stabilized Learned Optimizers</strong> — Meta-training pipeline that integrates SAM into learned optimizer training, improving stability and transfer across architectures, tasks, and initializations.</li>
 
-      <li><strong>KPEvents (Kaiser Permanente)</strong> — On-device AI-powered health calendar built with Apple Foundation Models, generating personalized fitness and medication routines while preserving user privacy.</li>
+      <li><strong>KPEvents (Kaiser Permanente)</strong> — On-device AI-powered health calendar using Apple Foundation Models; generates personalized routines using medical records and HealthKit data, with strict privacy guarantees.</li>
     </ul>
   </section>
 
@@ -156,7 +179,6 @@
   <section class="section" id="publications">
     <h2>Publications & Preprints</h2>
     <ul>
-
       <li>
         “<em>Accelerating active learning materials discovery with FAIR data and workflows</em>,”  
         <strong>Computational Materials Science</strong> (Elsevier), 2025.  
@@ -170,7 +192,6 @@
         M. Harwani, A. Strachan, J.C. Verduzco, et al.  
         <a href="https://chemrxiv.org/engage/chemrxiv/article-details/691e4b62ef936fb4a28038d7" target="_blank">Preprint Link</a>
       </li>
-
     </ul>
   </section>
 
