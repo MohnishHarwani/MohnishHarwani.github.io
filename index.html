@@ -4,163 +4,952 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mohnish Harwani — Academic Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --ink: #1a1a2e;
+      --ink-light: #4a4a6a;
+      --ink-muted: #8888a4;
+      --cream: #faf9f6;
+      --warm-white: #f5f3ef;
+      --sand: #e8e4dd;
+      --accent: #2d5a7b;
+      --accent-light: #3a7ca5;
+      --accent-glow: rgba(45, 90, 123, 0.08);
+      --highlight: #c9a84c;
+      --card-bg: #ffffff;
+      --radius: 16px;
+      --shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.04), 0 1px 2px rgba(26, 26, 46, 0.06);
+      --shadow-md: 0 4px 20px rgba(26, 26, 46, 0.06), 0 2px 8px rgba(26, 26, 46, 0.04);
+      --shadow-lg: 0 12px 40px rgba(26, 26, 46, 0.08), 0 4px 12px rgba(26, 26, 46, 0.04);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      background: #ffffff;
-      color: #222;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
-    header {
-      background: #f8f9fa;
-      border-bottom: 1px solid #ddd;
-      padding: 16px;
+    /* ── HERO / HEADER ── */
+    .hero {
+      position: relative;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 0 24px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 80%, rgba(45, 90, 123, 0.25), transparent),
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201, 168, 76, 0.12), transparent);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 72px 0 60px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-text { flex: 1; }
+
+    .hero-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      border: 3px solid rgba(250, 249, 246, 0.15);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-photo--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(250, 249, 246, 0.06);
+      color: rgba(250, 249, 246, 0.3);
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
       text-align: center;
+      line-height: 1.4;
+      padding: 16px;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      font-weight: 700;
+    .hero-label {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
     }
 
-    nav a {
-      margin: 0 10px;
-      color: #0a66c2;
-      text-decoration: none;
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.35s;
+    }
+
+    .hero-subtitle {
+      font-size: 1.12rem;
+      font-weight: 300;
+      color: rgba(250, 249, 246, 0.72);
+      max-width: 600px;
+      line-height: 1.75;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.5s;
+    }
+
+    .hero-subtitle strong {
+      color: rgba(250, 249, 246, 0.95);
       font-weight: 600;
     }
 
-    nav a:hover { text-decoration: underline; }
-
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 0 20px;
+    .hero-cta {
+      margin-top: 32px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.65s;
     }
 
-    .section {
-      padding: 20px;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      background: #fafafa;
-      margin-bottom: 25px;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 24px;
+      border-radius: 100px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
     }
 
-    h2 { margin-top: 0; }
-    ul { padding-left: 18px; }
-    a { color: #0a66c2; }
+    .btn-primary {
+      background: var(--accent-light);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(45, 90, 123, 0.3);
+    }
+
+    .btn-ghost {
+      background: rgba(250, 249, 246, 0.08);
+      color: var(--cream);
+      border: 1px solid rgba(250, 249, 246, 0.18);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(250, 249, 246, 0.14);
+      border-color: rgba(250, 249, 246, 0.3);
+    }
+
+    /* ── NAV ── */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 249, 246, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .nav-bar.scrolled {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 6px; }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-light);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 100px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* Mobile nav */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ink);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .section-icon.blue { background: rgba(45, 90, 123, 0.1); color: var(--accent); }
+    .section-icon.gold { background: rgba(201, 168, 76, 0.12); color: #9a7b2e; }
+    .section-icon.teal { background: rgba(38, 139, 133, 0.1); color: #268b85; }
+    .section-icon.rose { background: rgba(180, 80, 100, 0.1); color: #b45064; }
+
+    .section-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .section-block {
+      margin-bottom: 56px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius);
+      padding: 28px 30px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .card-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink-muted);
+      margin-bottom: 10px;
+    }
+
+    .card-desc {
+      font-size: 0.94rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--warm-white);
+      color: var(--ink-muted);
+      border: 1px solid var(--sand);
+    }
+
+    /* ── PUBLICATION CARDS ── */
+    .pub-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+    }
+
+    .pub-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .pub-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-glow);
+      padding: 4px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pub-body { flex: 1; }
+
+    .pub-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+
+    .pub-venue {
+      font-size: 0.86rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .pub-authors {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+    }
+
+    .pub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .pub-link:hover { color: var(--accent-light); }
+    .pub-link svg { width: 14px; height: 14px; }
+
+    /* ── CONFERENCE TALKS ── */
+    .talk-item {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius);
+      padding: 22px 26px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+    }
+
+    .talk-item:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .talk-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--highlight);
+      background: rgba(201, 168, 76, 0.08);
+      padding: 4px 11px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .talk-body { flex: 1; }
+
+    .talk-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.45;
+      margin-bottom: 5px;
+    }
+
+    .talk-venue {
+      font-size: 0.84rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .talk-location {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    /* ── CONTACT SECTION ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      background: var(--card-bg);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      background: var(--accent-glow);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .contact-label {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ── STATUS BANNER ── */
+    .status-banner {
+      background: linear-gradient(135deg, rgba(45, 90, 123, 0.06), rgba(201, 168, 76, 0.06));
+      border: 1px solid rgba(45, 90, 123, 0.12);
+      border-radius: var(--radius);
+      padding: 22px 28px;
+      margin-bottom: 56px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3dbb6e;
+      flex-shrink: 0;
+      animation: pulse 2s ease infinite;
+    }
+
+    .status-text {
+      font-size: 0.94rem;
+      color: var(--ink-light);
+    }
+
+    .status-text strong {
+      color: var(--ink);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      border-top: 1px solid var(--sand);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(61, 187, 110, 0.4); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(61, 187, 110, 0); }
+    }
+
+    .fade-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .hero-inner { padding: 52px 0 44px; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        right: 0;
+        background: rgba(250, 249, 246, 0.97);
+        backdrop-filter: blur(16px);
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--sand);
+        gap: 4px;
+      }
+      .nav-links.open a {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+      }
+      .nav-toggle { display: block; }
+      .poster-grid { grid-template-columns: 1fr; }
+      .pub-card { flex-direction: column; gap: 10px; }
+      .talk-item { flex-direction: column; gap: 8px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .hero-inner { flex-direction: column-reverse; text-align: center; gap: 28px; }
+      .hero-photo { width: 140px; height: 140px; }
+      .hero-cta { justify-content: center; }
+    }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Mohnish Harwani, Home Page</h1>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#research">Research</a>
-    <a href="#projects">Projects</a>
-    <a href="#publications">Publications</a>
-    <a href="#contact">Contact</a>
-    <a href="CV_Job.pdf">Resume</a>
-  </nav>
-</header>
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="hero-label">Purdue University · Computer Science</span>
+      <h1>Mohnish Harwani</h1>
+      <p class="hero-subtitle">
+        Researching <strong>training algorithms &amp; architectures</strong> that improve
+        large-scale deep neural networks — recently focused on meta-learned optimizers
+        that extract richer information from backpropagation gradients.
+      </p>
+      <div class="hero-cta">
+        <a href="CV_Job.pdf" class="btn btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
+          Resume
+        </a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        <a href="https://scholar.google.com/citations?hl=en&user=89uO7WYAAAAJ&view_op=list_works&gmla=AKzYXQ11tWDnSdYmn5mUqC6zij6W3OMiyqDCuqxjrTmwzHOQfq6_U130c_mG6OaCPIK3-En_jNp1yllK1MDur9J9" class="btn btn-ghost" target="_blank">Google Scholar</a>
+      </div>
+    </div>
 
-<div class="container">
+    <!-- ✏️ PHOTO: Replace the placeholder below with your image.
+         Just swap src="your-photo.jpg" and remove the hero-photo--placeholder class. -->
+    <div class="hero-photo hero-photo--placeholder">
+      <!-- <img src="your-photo.jpg" alt="Mohnish Harwani"> -->
+      Add your<br>photo here
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">MH</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#talks">Talks</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<main class="main">
+
+  <!-- STATUS -->
+  <div class="status-banner fade-section">
+    <span class="status-dot"></span>
+    <span class="status-text">
+      Actively seeking <strong>AI research positions (May 2026)</strong> or <strong>PhD positions (Fall 2026)</strong>
+    </span>
+  </div>
 
   <!-- ABOUT -->
-  <section class="section" id="about">
-    <h2>About Me</h2>
-    <p>
-      I am a graduating senior at <strong>Purdue University</strong> majoring in
-      <strong>Computer Science</strong> with a minor in Mathematics (GPA: 3.87).  
-      My research focuses on developing <strong>training algorithms</strong> and
-      <strong>architectures</strong>, that improve the performance of large-scale, deep neural networks.
-      Recently, I've been trying to achieve this goal with with meta-learned neural network optimizers that can extract
-      more generalizable and otherwise useful information from backpropogation gradients. I'm also very interested in LLMs and reasoning.
-    </p>
-    <p>
-    </p>
-    <p>
-      I am currently seeking <strong>AI research positions for May 2026</strong> or <strong>PhD positions for Fall 2026</strong>.
-    </p>
+  <section class="section-block fade-section" id="about">
+    <div class="section-header">
+      <div class="section-icon blue">👤</div>
+      <h2>About</h2>
+    </div>
+    <div class="card">
+      <p class="card-desc">
+        I'm a graduating senior at <strong>Purdue University</strong> majoring in
+        <strong>Computer Science</strong> with a minor in Mathematics (GPA: 3.87).
+        My research focuses on developing training algorithms and architectures that
+        improve the performance of large-scale deep neural networks.
+      </p>
+      <br>
+      <p class="card-desc">
+        Recently, I've been working on meta-learned neural network optimizers that can
+        extract more generalizable and otherwise useful information from backpropagation
+        gradients. I'm also deeply interested in LLMs and reasoning.
+      </p>
+    </div>
   </section>
 
   <!-- PROJECTS -->
-  <section class="section" id="projects">
-    <h2>Projects</h2>
-    <ul>
-      <li><strong>nanoHUB AURA</strong> — Large-scale LLM-powered scientific assistant; released as a <strong>ChemRxiv preprint</strong>. Uses multi-agent systems and physics-based simulation workflows to assist researchers at scale.</li>
+  <section class="section-block fade-section" id="projects">
+    <div class="section-header">
+      <div class="section-icon teal">⚡</div>
+      <h2>Projects</h2>
+    </div>
 
-      <li><strong>Zeroeth-Order Neural Optimizer</strong> — CMA-ES–based warmup optimizer outperforming SGD in early training for noisy, nonconvex landscapes.</li>
+    <div class="card">
+      <div class="card-title">nanoHUB AURA</div>
+      <div class="card-meta">CHEMRXIV PREPRINT · MULTI-AGENT SYSTEM</div>
+      <p class="card-desc">
+        Large-scale LLM-powered scientific assistant that uses multi-agent systems
+        and physics-based simulation workflows to assist researchers at scale.
+        Released as a ChemRxiv preprint.
+      </p>
+      <div class="card-tags">
+        <span class="tag">LLMs</span>
+        <span class="tag">Multi-Agent</span>
+        <span class="tag">Scientific Computing</span>
+      </div>
+    </div>
 
-      <li><strong>SAM-Stabilized Learned Optimizers</strong> — Meta-training pipeline that integrates SAM into learned optimizer training, improving stability and transfer across architectures, tasks, and initializations.</li>
+    <div class="card">
+      <div class="card-title">SAM-Stabilized Learned Optimizers</div>
+      <div class="card-meta">META-LEARNING · OPTIMIZATION</div>
+      <p class="card-desc">
+        Meta-training pipeline integrating Sharpness-Aware Minimization into learned
+        optimizer training, improving stability and transfer across architectures,
+        tasks, and initializations.
+      </p>
+      <div class="card-tags">
+        <span class="tag">SAM</span>
+        <span class="tag">Meta-Learning</span>
+        <span class="tag">Transfer</span>
+      </div>
+    </div>
 
-      <li><strong>KPEvents (Kaiser Permanente)</strong> — On-device AI-powered health calendar using Apple Foundation Models; generates personalized routines using medical records and HealthKit data, with strict privacy guarantees.</li>
-    </ul>
+    <div class="card">
+      <div class="card-title">Zeroeth-Order Neural Optimizer</div>
+      <div class="card-meta">OPTIMIZATION · CMA-ES</div>
+      <p class="card-desc">
+        CMA-ES–based warmup optimizer that outperforms SGD in early training
+        for noisy, nonconvex landscapes.
+      </p>
+      <div class="card-tags">
+        <span class="tag">CMA-ES</span>
+        <span class="tag">Zeroth-Order</span>
+        <span class="tag">Warmup</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">KPEvents — Kaiser Permanente</div>
+      <div class="card-meta">ON-DEVICE AI · HEALTH</div>
+      <p class="card-desc">
+        On-device AI-powered health calendar using Apple Foundation Models.
+        Generates personalized routines from medical records and HealthKit data
+        with strict privacy guarantees.
+      </p>
+      <div class="card-tags">
+        <span class="tag">Apple ML</span>
+        <span class="tag">HealthKit</span>
+        <span class="tag">Privacy</span>
+      </div>
+    </div>
   </section>
 
   <!-- PUBLICATIONS -->
-  <section class="section" id="publications">
-    <h2>Publications & Preprints</h2>
-    <ul>
-      <li>
-        “<em>Accelerating active learning materials discovery with FAIR data and workflows</em>,”  
-        <strong>Computational Materials Science</strong> (Elsevier), 2025.  
-        M. Harwani, J.C. Verduzco, A. Strachan.  
-        <a href="#">PDF</a>
-      </li>
+  <section class="section-block fade-section" id="publications">
+    <div class="section-header">
+      <div class="section-icon gold">📄</div>
+      <h2>Publications &amp; Preprints</h2>
+    </div>
 
-      <li>
-        “<em>nanoHUB AURA: An Autonomous Universal Research Assistant for Scientific Computing</em>,”  
-        <strong>ChemRxiv Preprint</strong>, 2024.  
-        M. Harwani, A. Strachan, J.C. Verduzco, et al.  
-        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/691e4b62ef936fb4a28038d7" target="_blank">Preprint Link</a>
-      </li>
-    </ul>
+    <div class="pub-card">
+      <span class="pub-year">2025</span>
+      <div class="pub-body">
+        <div class="pub-title">Accelerating Active Learning Materials Discovery with FAIR Data and Workflows: A Case Study for Alloy Melting Temperatures</div>
+        <div class="pub-venue">Computational Materials Science (Elsevier)</div>
+        <div class="pub-authors">M. Harwani, J.C. Verduzco, B.H. Lee, A. Strachan</div>
+        <a href="#" class="pub-link">
+          View Paper
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <span class="pub-year">2024</span>
+      <div class="pub-body">
+        <div class="pub-title">Autonomous Universal Research Assistant (AURA): Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
+        <div class="pub-venue">ChemRxiv Preprint</div>
+        <div class="pub-authors">J.C. Verduzco, M. Harwani, D. Mejia, A. Strachan</div>
+        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/691e4b62ef936fb4a28038d7" target="_blank" class="pub-link">
+          View Preprint
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+    </div>
   </section>
 
-  <!-- POSTERS & PRESENTATIONS -->
-<section class="section" id="posters">
-  <h2>Posters & Presentations</h2>
-  <ul>
+  <!-- CONFERENCE & WORKSHOP PRESENTATIONS -->
+  <section class="section-block fade-section" id="talks">
+    <div class="section-header">
+      <div class="section-icon rose">🎤</div>
+      <h2>Conference &amp; Workshop Presentations</h2>
+    </div>
 
-    <li>
-      <strong>“Integrating AI into nanoHUB: Toward Intelligent and Connected Scientific Workflows”</strong>  
-      J.C. Verduzco, D. Mejia, <strong>M. Harwani</strong>, G. Klimeck, A. Strachan.  
-      Purdue University — Presented at the Google 2025 AI Summit in Indianapolis.  
-      <a href="AI_Summit_POSTER_nanoHUB_DM.pdf" target="_blank">Poster PDF</a>
-    </li>
+    <div class="talk-item">
+      <span class="talk-date">Feb 2026</span>
+      <div class="talk-body">
+        <div class="talk-title">AURA: Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
+        <div class="talk-venue">Materials Research and Data Alliance (MaRDA)</div>
+        <div class="talk-location">Living in the Material World</div>
+      </div>
+    </div>
 
-    <li>
-      <strong>“nanoRA: A Multi-Agent Research Assistant for Autonomous Scientific Workflows on nanoHUB”</strong>  
-      J.C. Verduzco, <strong>M. Harwani</strong>, A. Strachan.  
-      Presented at the AI for Materials Science (AIMS) 2025 Workshop
-      <a href="AIMS_POSTER.pdf" target="_blank">Poster PDF</a>
-    </li>
+    <div class="talk-item">
+      <span class="talk-date">Feb 2026</span>
+      <div class="talk-body">
+        <div class="talk-title">Leveraging Public Simulation Data to Accelerate Alloy Discovery and Optimization</div>
+        <div class="talk-venue">Materials Research and Data Alliance (MaRDA)</div>
+        <div class="talk-location">Living in the Material World</div>
+      </div>
+    </div>
 
-  </ul>
-</section>
+    <div class="talk-item">
+      <span class="talk-date">Nov 2025</span>
+      <div class="talk-body">
+        <div class="talk-title">Integrating AI into nanoHUB: Toward Intelligent and Connected Scientific Workflows</div>
+        <div class="talk-venue">Google AI Summit</div>
+        <div class="talk-location">Indianapolis, IN</div>
+        <a href="AI_Summit_POSTER_nanoHUB_DM.pdf" target="_blank" class="pub-link" style="margin-top: 8px;">
+          Poster PDF
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+    </div>
 
+    <div class="talk-item">
+      <span class="talk-date">Jun 2025</span>
+      <div class="talk-body">
+        <div class="talk-title">nanoRA: A Multi-Agent Research Assistant for Autonomous Scientific Workflows on nanoHUB</div>
+        <div class="talk-venue">AI for Materials Science (AIMS) Workshop</div>
+        <div class="talk-location">Washington, DC</div>
+        <a href="AIMS_POSTER.pdf" target="_blank" class="pub-link" style="margin-top: 8px;">
+          Poster PDF
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="talk-item">
+      <span class="talk-date">Dec 2024</span>
+      <div class="talk-body">
+        <div class="talk-title">The Impacts of Derivative-Free Optimization on Generalization of Neural Networks</div>
+        <div class="talk-venue">RL and Out-of-Distribution ML Workshop</div>
+        <div class="talk-location">Purdue University</div>
+      </div>
+    </div>
+  </section>
 
   <!-- CONTACT -->
-  <section class="section" id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:mohhar691@gmail.com">mohhar691@gmail.com</a></p>
-    <p>GitHub: <a href="https://github.com/MohnishHarwani">github.com/MohnishHarwani</a></p>
-    <p>LinkedIn: <a href="https://linkedin.com/in/mohnish-harwani-607b50291">linkedin.com/in/mohnish-harwani</a></p>
-    <p>Google Scholar: <a href="https://scholar.google.com/citations?hl=en&user=89uO7WYAAAAJ&view_op=list_works&gmla=AKzYXQ11tWDnSdYmn5mUqC6zij6W3OMiyqDCuqxjrTmwzHOQfq6_U130c_mG6OaCPIK3-En_jNp1yllK1MDur9J9">Here</a></p>
+  <section class="section-block fade-section" id="contact">
+    <div class="section-header">
+      <div class="section-icon blue">✉️</div>
+      <h2>Contact</h2>
+    </div>
+
+    <div class="contact-grid">
+      <a href="mailto:mohhar691@gmail.com" class="contact-link">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">mohhar691@gmail.com</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/MohnishHarwani" target="_blank" class="contact-link">
+        <div class="contact-icon">🐙</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">MohnishHarwani</div>
+        </div>
+      </a>
+
+      <a href="https://linkedin.com/in/mohnish-harwani-607b50291" target="_blank" class="contact-link">
+        <div class="contact-icon">💼</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">mohnish-harwani</div>
+        </div>
+      </a>
+
+      <a href="https://scholar.google.com/citations?hl=en&user=89uO7WYAAAAJ&view_op=list_works&gmla=AKzYXQ11tWDnSdYmn5mUqC6zij6W3OMiyqDCuqxjrTmwzHOQfq6_U130c_mG6OaCPIK3-En_jNp1yllK1MDur9J9" target="_blank" class="contact-link">
+        <div class="contact-icon">🎓</div>
+        <div>
+          <div class="contact-label">Google Scholar</div>
+          <div class="contact-value">View Profile</div>
+        </div>
+      </a>
+    </div>
   </section>
 
-  <p style="text-align:center;color:#777;margin-top:20px;">
-    © Mohnish Harwani — Hosted on GitHub Pages
-  </p>
+</main>
 
-</div>
+<footer class="footer">
+  &copy; 2025 Mohnish Harwani · Hosted on GitHub Pages
+</footer>
+
+<script>
+  // Sticky nav shadow
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // Mobile menu toggle
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    links.classList.toggle('open');
+  });
+
+  // Close mobile menu on link click
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => links.classList.remove('open'));
+  });
+
+  // Intersection Observer for fade-in sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
