@@ -227,11 +227,12 @@
 
     /* ── CONTACT ── */
     .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
-    .contact-link { display: flex; align-items: center; gap: 14px; padding: 18px 22px; background: var(--card-bg); border: 1px solid rgba(0,0,0,0.06); border-radius: var(--radius); text-decoration: none; color: var(--ink); box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+    .contact-link { display: flex; align-items: center; gap: 14px; padding: 18px 22px; background: var(--card-bg); border: 1px solid rgba(0,0,0,0.06); border-radius: var(--radius); text-decoration: none; color: var(--ink); box-shadow: var(--shadow-sm); transition: all 0.3s ease; overflow: hidden; min-width: 0; }
     .contact-link:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: var(--accent); }
     .contact-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; background: var(--accent-glow); color: var(--accent); flex-shrink: 0; }
+    .contact-text { min-width: 0; overflow: hidden; }
     .contact-label { font-size: 0.76rem; font-weight: 500; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-    .contact-value { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+    .contact-value { font-size: 0.9rem; font-weight: 600; color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     /* ── STATUS BANNER ── */
     .status-banner { background: linear-gradient(135deg, rgba(45, 90, 123, 0.06), rgba(201, 168, 76, 0.06)); border: 1px solid rgba(45, 90, 123, 0.12); border-radius: var(--radius); padding: 22px 28px; margin-bottom: 56px; display: flex; align-items: center; gap: 16px; }
@@ -272,9 +273,8 @@
       <span class="hero-label">Purdue University &middot; Computer Science</span>
       <h1>Mohnish Harwani</h1>
       <p class="hero-subtitle">
-        Researching <strong>training algorithms &amp; architectures</strong> that improve
-        large-scale deep neural networks &mdash; recently focused on meta-learned optimizers
-        that extract richer information from backpropagation gradients.
+        Researching <strong>training algorithms &amp; model architectures</strong> that improve
+        large-scale deep neural networks. Also researching ways to <strong>accelerate science with AI.</strong>
       </p>
       <div class="hero-cta">
         <a href="CV_Job.pdf" class="btn btn-primary">
@@ -327,15 +327,19 @@
     <div class="card">
       <p class="card-desc">
         I'm a graduating senior at <strong>Purdue University</strong> majoring in
-        <strong>Computer Science</strong> with a minor in Mathematics (GPA: 3.87).
-        My research focuses on developing training algorithms and architectures that
-        improve the performance of large-scale deep neural networks.
+        <strong>Computer Science</strong>. My resaerch focuses on developing better training algorithms for large 
+        neural neural networks, and leveraging AI to accelerate scientific research.
       </p>
       <br>
       <p class="card-desc">
-        Recently, I've been working on meta-learned neural network optimizers that can
-        extract more generalizable and otherwise useful information from backpropagation
-        gradients. I'm also deeply interested in LLMs and reasoning.
+        Recently, I've been working with nanoHUB to develop agents that perform autonomous research 
+        leveraging software tools, public data repositories, and HPC clusters. We expect our Autonomous Universal Research Assistant (AURA)
+        to be available to the public soon.
+        
+        I've also been exploring meta-learned neural network optimizers that can
+        extract more generalizable and otherwise useful information during backpropogation. 
+
+        Feel free to email me if you'd like to connect.
       </p>
     </div>
   </section>
@@ -512,7 +516,7 @@
     <div class="contact-grid">
       <a id="email-link" class="contact-link" style="cursor:pointer">
         <div class="contact-icon">&#x1F4E7;</div>
-        <div>
+        <div class="contact-text">
           <div class="contact-label">Email</div>
           <div class="contact-value" id="email-display">Loading...</div>
         </div>
@@ -520,7 +524,7 @@
 
       <a href="https://github.com/MohnishHarwani" target="_blank" class="contact-link">
         <div class="contact-icon">&#x1F419;</div>
-        <div>
+        <div class="contact-text">
           <div class="contact-label">GitHub</div>
           <div class="contact-value">MohnishHarwani</div>
         </div>
@@ -528,7 +532,7 @@
 
       <a href="https://linkedin.com/in/mohnish-harwani-607b50291" target="_blank" class="contact-link">
         <div class="contact-icon">&#x1F4BC;</div>
-        <div>
+        <div class="contact-text">
           <div class="contact-label">LinkedIn</div>
           <div class="contact-value">mohnish-harwani</div>
         </div>
@@ -536,7 +540,7 @@
 
       <a href="https://scholar.google.com/citations?hl=en&amp;user=89uO7WYAAAAJ" target="_blank" class="contact-link">
         <div class="contact-icon">&#x1F393;</div>
-        <div>
+        <div class="contact-text">
           <div class="contact-label">Google Scholar</div>
           <div class="contact-value">View Profile</div>
         </div>
