@@ -73,9 +73,9 @@
     .hero-text { flex: 1; }
 
     .hero-photo {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
+      width: 200px;
+      height: 260px;
+      border-radius: 20px;
       flex-shrink: 0;
       overflow: hidden;
       border: 3px solid rgba(250, 249, 246, 0.15);
@@ -88,6 +88,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 15%;
       display: block;
     }
 
@@ -622,7 +623,7 @@
       .talk-item { flex-direction: column; gap: 8px; }
       .contact-grid { grid-template-columns: 1fr; }
       .hero-inner { flex-direction: column-reverse; text-align: center; gap: 28px; }
-      .hero-photo { width: 140px; height: 140px; }
+      .hero-photo { width: 160px; height: 210px; }
       .hero-cta { justify-content: center; }
     }
   </style>
@@ -651,11 +652,9 @@
       </div>
     </div>
 
-    <!-- ✏️ PHOTO: Replace the placeholder below with your image.
-         Just swap src="your-photo.jpg" and remove the hero-photo--placeholder class. -->
-    <div class="hero-photo hero-photo--placeholder">
-      <!-- <img src="your-photo.jpg" alt="Mohnish Harwani"> -->
-      Add your<br>photo here
+    <!-- ✏️ PHOTO: To change your photo, replace headshot.png in your repo root -->
+    <div class="hero-photo">
+      <img src="headshot.png" alt="Mohnish Harwani">
     </div>
   </div>
 </div>
@@ -880,11 +879,11 @@
     </div>
 
     <div class="contact-grid">
-      <a href="mailto:mohhar691@gmail.com" class="contact-link">
+      <a href="/cdn-cgi/l/email-protection#81eceee9e9e0f3b7b8b0c1e6ece0e8edafe2eeec" class="contact-link">
         <div class="contact-icon">📧</div>
         <div>
           <div class="contact-label">Email</div>
-          <div class="contact-value">mohhar691@gmail.com</div>
+          <div class="contact-value"><span class="__cf_email__" data-cfemail="0c616364646d7e3a353d4c6b616d6560226f6361">[email&#160;protected]</span></div>
         </div>
       </a>
 
@@ -920,7 +919,7 @@
   &copy; 2025 Mohnish Harwani · Hosted on GitHub Pages
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Sticky nav shadow
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -941,15 +940,4 @@
 
   // Intersection Observer for fade-in sections
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
-</script>
-
-</body>
-</html>
+    entries.forEach(en
