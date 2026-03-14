@@ -172,19 +172,35 @@
 
     .nav-inner {
       max-width: 900px; margin: 0 auto; padding: 0 24px;
-      display: flex; align-items: center; justify-content: space-between; height: 56px;
+      display: flex; align-items: center; justify-content: center; height: 56px;
+      position: relative;
     }
 
-    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 6px; }
-    .nav-links a { font-size: 0.82rem; font-weight: 600; color: var(--ink-light); text-decoration: none; padding: 6px 14px; border-radius: 100px; transition: all 0.2s ease; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 600; color: var(--ink-light);
+      text-decoration: none; padding: 6px 14px; border-radius: 100px;
+      transition: all 0.2s ease; cursor: pointer;
+    }
     .nav-links a:hover { color: var(--accent); background: var(--accent-glow); }
+    .nav-links a.active { color: var(--accent); background: var(--accent-glow); }
 
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-toggle {
+      display: none; background: none; border: none; cursor: pointer; padding: 8px;
+      position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    }
     .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; }
 
     /* ── MAIN ── */
     .main { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* ── PAGE TRANSITIONS ── */
+    .page { display: none; }
+    .page.active {
+      display: block;
+      animation: pageIn 0.35s ease forwards;
+    }
+    @keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
     .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
     .section-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
@@ -198,6 +214,10 @@
     /* ── CARDS ── */
     .card { background: var(--card-bg); border: 1px solid rgba(0,0,0,0.06); border-radius: var(--radius); padding: 28px 30px; margin-bottom: 16px; box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
     .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+    /* 2-column grid for Research & Projects page */
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .card-grid .card { margin-bottom: 0; display: flex; flex-direction: column; }
     .card-title { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.4; }
     .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.04em; color: var(--ink-muted); margin-bottom: 10px; }
     .card-desc { font-size: 0.94rem; color: var(--ink-light); line-height: 1.7; }
@@ -235,18 +255,163 @@
     .contact-value { font-size: 0.9rem; font-weight: 600; color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     /* ── STATUS BANNER ── */
-    .status-banner { background: linear-gradient(135deg, rgba(45, 90, 123, 0.06), rgba(201, 168, 76, 0.06)); border: 1px solid rgba(45, 90, 123, 0.12); border-radius: var(--radius); padding: 22px 28px; margin-bottom: 56px; display: flex; align-items: center; gap: 16px; }
+    .status-banner { background: linear-gradient(135deg, rgba(45, 90, 123, 0.06), rgba(201, 168, 76, 0.06)); border: 1px solid rgba(45, 90, 123, 0.12); border-radius: var(--radius); padding: 22px 28px; margin-bottom: 40px; display: flex; align-items: center; gap: 16px; }
     .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #3dbb6e; flex-shrink: 0; animation: pulse 2s ease infinite; }
     .status-text { font-size: 0.94rem; color: var(--ink-light); }
     .status-text strong { color: var(--ink); }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; margin-top: 4px; }
+
+    /* The spine line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 88px; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--sand);
+    }
+
+    .timeline-item {
+      position: relative;
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: timelineIn 0.45s ease forwards;
+    }
+    .timeline-item:nth-child(1) { animation-delay: 0.04s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.10s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.16s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.22s; }
+    .timeline-item:nth-child(5) { animation-delay: 0.28s; }
+    .timeline-item:nth-child(6) { animation-delay: 0.34s; }
+    .timeline-item:nth-child(7) { animation-delay: 0.40s; }
+    .timeline-item:nth-child(8) { animation-delay: 0.46s; }
+    .timeline-item:last-child .tl-connector { display: none; }
+
+    @keyframes timelineIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* Left column: date + connector */
+    .tl-left {
+      width: 88px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-right: 28px;
+      padding-top: 18px;
+      position: relative;
+    }
+    .tl-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      text-align: right;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+    }
+
+    /* The dot sits on the spine */
+    .tl-dot {
+      position: absolute;
+      right: -5px;
+      top: 22px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      z-index: 1;
+    }
+    .tl-dot.gold { border-color: var(--highlight); }
+
+    /* Right column: card + connector */
+    .tl-right {
+      flex: 1;
+      padding-left: 28px;
+      padding-bottom: 20px;
+    }
+    .tl-right:last-child { padding-bottom: 0; }
+
+    .tl-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+      position: relative;
+    }
+    .tl-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+    /* Arrow notch pointing left toward spine */
+    .tl-card::before {
+      content: '';
+      position: absolute;
+      left: -6px; top: 20px;
+      width: 10px; height: 10px;
+      background: var(--card-bg);
+      border-left: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transform: rotate(45deg);
+    }
+
+    .tl-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .tl-type.pub  { background: rgba(201,168,76,0.1);  color: #8a6a1e; }
+    .tl-type.talk { background: rgba(180,80,100,0.09); color: #934055; }
+    .tl-type.work { background: rgba(45,90,123,0.08);  color: var(--accent); }
+
+    .tl-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+    .tl-org {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent-light);
+      margin-bottom: 4px;
+    }
+    .tl-venue {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+    .tl-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tl-link:hover { color: var(--accent-light); }
+    .tl-link svg { width: 12px; height: 12px; }
 
     .footer { text-align: center; padding: 32px 24px; font-size: 0.8rem; color: var(--ink-muted); border-top: 1px solid var(--sand); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(61, 187, 110, 0.4); } 50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(61, 187, 110, 0); } }
-    .fade-section { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .fade-section.visible { opacity: 1; transform: translateY(0); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 680px) {
@@ -254,12 +419,24 @@
       .hero-photo { width: 200px; height: 260px; }
       .hero-cta { justify-content: center; }
       .nav-links { display: none; }
-      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0; background: rgba(250, 249, 246, 0.97); backdrop-filter: blur(16px); padding: 16px 24px; border-bottom: 1px solid var(--sand); gap: 4px; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 56px; left: 0; right: 0;
+        background: rgba(250, 249, 246, 0.97);
+        backdrop-filter: blur(16px);
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--sand);
+        gap: 4px;
+      }
       .nav-links.open a { padding: 10px 14px; font-size: 0.9rem; }
       .nav-toggle { display: block; }
       .pub-card { flex-direction: column; gap: 10px; }
       .talk-item { flex-direction: column; gap: 8px; }
       .contact-grid { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr; }
+      .tl-left { width: 64px; padding-right: 20px; }
+      .timeline::before { left: 64px; }
+      .tl-right { padding-left: 20px; }
     }
   </style>
 </head>
@@ -277,12 +454,11 @@
         large-scale deep neural networks. Also researching ways to <strong>accelerate science with AI.</strong>
       </p>
       <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary">
+        <a href="#" onclick="navigate('contact'); return false;" class="btn btn-primary">
           Resume Available Upon Request
         </a>
-        </a>
-        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
-        <a href="https://scholar.google.com/citations?hl=en&amp;user=89uO7WYAAAAJ" class="btn btn-ghost" target="_blank">Google Scholar</a>
+        <a href="#" onclick="navigate('contact'); return false;" class="btn btn-ghost">Get in Touch</a>
+        <a href="https://scholar.google.com/citations?hl=en&user=89uO7WYAAAAJ" class="btn btn-ghost" target="_blank">Google Scholar</a>
       </div>
     </div>
     <div class="hero-photo">
@@ -294,13 +470,11 @@
 <!-- ═══════════ NAV ═══════════ -->
 <nav class="nav-bar" id="navbar">
   <div class="nav-inner">
-    <a href="#" class="nav-logo">MH</a>
     <div class="nav-links" id="navLinks">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#publications">Publications</a>
-      <a href="#talks">Talks</a>
-      <a href="#contact">Contact</a>
+      <a onclick="navigate('home')" data-page="home">Home</a>
+      <a onclick="navigate('research')" data-page="research">Research &amp; Projects</a>
+      <a onclick="navigate('talks')" data-page="talks">Talks</a>
+      <a onclick="navigate('contact')" data-page="contact">Contact</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
@@ -311,246 +485,567 @@
 <!-- ═══════════ MAIN ═══════════ -->
 <main class="main">
 
-  <div class="status-banner fade-section">
-    <span class="status-dot"></span>
-    <span class="status-text">
-      Actively seeking <strong>AI research positions (May 2026)</strong> or <strong>PhD positions (Fall 2026)</strong>
-    </span>
+  <!-- ══ PAGE: HOME ══ -->
+  <div class="page active" id="page-home">
+
+    <div class="status-banner">
+      <span class="status-dot"></span>
+      <span class="status-text">
+        Actively seeking <strong>AI research positions (May 2026)</strong> or <strong>PhD positions (Fall 2026)</strong>
+      </span>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="section-block" id="about">
+      <div class="section-header">
+        <div class="section-icon blue">&#x1F464;</div>
+        <h2>About</h2>
+      </div>
+      <div class="card">
+        <p class="card-desc">
+          I'm a graduating senior at <strong>Purdue University</strong> majoring in
+          <strong>Computer Science</strong>. My research focuses on developing better training algorithms for large
+          neural networks, and leveraging AI to accelerate scientific research.
+        </p>
+        <br>
+        <p class="card-desc">
+          Recently, I've been working with nanoHUB to develop agents that perform autonomous research by
+          leveraging software tools, public data repositories, and HPC clusters. We expect our Autonomous Universal Research Assistant (AURA)
+          to be available to the public soon.
+        </p>
+        <br>
+        <p class="card-desc">
+          I've also been exploring meta-learned neural network optimizers that can
+          extract more generalizable and otherwise useful information during backpropagation.
+        </p>
+        <br>
+        <p class="card-desc">
+          Feel free to email me if you're interested in my work, hiring, or would just like to connect!
+        </p>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-icon gold">&#x1F4C4;</div>
+        <h2>Latest News</h2>
+      </div>
+
+      <div class="timeline">
+
+        <!-- Feb 2026 — MaRDA Talk 1 -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">Feb<br>2026</span>
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type talk">&#x1F3A4; Talk</span>
+              <div class="tl-title">AURA: Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
+              <div class="tl-org">Materials Research and Data Alliance (MaRDA)</div>
+              <div class="tl-venue">Living in the Material World</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feb 2026 — MaRDA Talk 2 -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">Feb<br>2026</span>
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type talk">&#x1F3A4; Talk</span>
+              <div class="tl-title">Leveraging Public Simulation Data to Accelerate Alloy Discovery and Optimization</div>
+              <div class="tl-org">Materials Research and Data Alliance (MaRDA)</div>
+              <div class="tl-venue">Living in the Material World</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jan 2026 — ChemRxiv Preprint -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">Jan<br>2026</span>
+            <div class="tl-dot gold"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type pub">&#x1F4C4; Preprint</span>
+              <div class="tl-title">Autonomous Universal Research Assistant (AURA): Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
+              <div class="tl-org">ChemRxiv</div>
+              <div class="tl-venue">J.C. Verduzco, M. Harwani, D. Mejia, A. Strachan</div>
+              <a href="https://chemrxiv.org/engage/chemrxiv/article-details/691e4b62ef936fb4a28038d7" target="_blank" class="tl-link">View preprint <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nov 2025 — Google AI Summit -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">Nov<br>2025</span>
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type talk">&#x1F3A4; Talk</span>
+              <div class="tl-title">Integrating AI into nanoHUB: Toward Intelligent and Connected Scientific Workflows</div>
+              <div class="tl-org">Google AI Summit</div>
+              <div class="tl-venue">Indianapolis, IN</div>
+              <a href="AI_Summit_POSTER_nanoHUB_DM.pdf" target="_blank" class="tl-link">Poster PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jun 2025 — AIMS Workshop -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">Jun<br>2025</span>
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type talk">&#x1F3A4; Talk</span>
+              <div class="tl-title">nanoRA: A Multi-Agent Research Assistant for Autonomous Scientific Workflows on nanoHUB</div>
+              <div class="tl-org">AI for Materials Science (AIMS) Workshop</div>
+              <div class="tl-venue">Washington, DC</div>
+              <a href="AIMS_POSTER.pdf" target="_blank" class="tl-link">Poster PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- May 2025 — Kaiser Permanente -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">May<br>2025</span>
+            <div class="tl-dot gold"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type work">&#x1F4BC; Internship</span>
+              <div class="tl-title">Software Engineering Intern, iOS Development</div>
+              <div class="tl-org">Kaiser Permanente</div>
+              <div class="tl-venue">On-device health calendar using Apple Foundation Models &amp; HealthKit</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jan 2025 — Elsevier Paper -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">Jan<br>2025</span>
+            <div class="tl-dot gold"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type pub">&#x1F4C4; Publication</span>
+              <div class="tl-title">Accelerating Active Learning Materials Discovery with FAIR Data and Workflows</div>
+              <div class="tl-org">Computational Materials Science — Elsevier</div>
+              <div class="tl-venue">M. Harwani, J.C. Verduzco, B.H. Lee, A. Strachan</div>
+              <a href="#" class="tl-link">View paper <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dec 2024 — Purdue Workshop -->
+        <div class="timeline-item">
+          <div class="tl-left">
+            <span class="tl-date">Dec<br>2024</span>
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-card">
+              <span class="tl-type talk">&#x1F3A4; Talk</span>
+              <div class="tl-title">The Impacts of Derivative-Free Optimization on Generalization of Neural Networks</div>
+              <div class="tl-org">RL and Out-of-Distribution ML</div>
+              <div class="tl-venue">Purdue University</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </div>
+  <!-- /page-home -->
 
-<!-- ABOUT -->
-<section class="section-block fade-section" id="about">
-  <div class="section-header">
-    <div class="section-icon blue">&#x1F464;</div>
-    <h2>About</h2>
+
+  <!-- ══ PAGE: RESEARCH & PROJECTS ══ -->
+  <div class="page" id="page-research">
+
+    <!-- PUBLICATIONS — newest first -->
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-icon gold">&#x1F4C4;</div>
+        <h2>Publications &amp; Preprints</h2>
+      </div>
+
+      <div class="pub-card">
+        <span class="pub-year">Jan 2026</span>
+        <div class="pub-body">
+          <div class="pub-title">Autonomous Universal Research Assistant (AURA): Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
+          <div class="pub-venue">ChemRxiv Preprint</div>
+          <div class="pub-authors">J.C. Verduzco, M. Harwani, D. Mejia, A. Strachan</div>
+          <a href="https://chemrxiv.org/engage/chemrxiv/article-details/691e4b62ef936fb4a28038d7" target="_blank" class="pub-link">
+            View Preprint
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <span class="pub-year">Jan 2025</span>
+        <div class="pub-body">
+          <div class="pub-title">Accelerating Active Learning Materials Discovery with FAIR Data and Workflows: A Case Study for Alloy Melting Temperatures</div>
+          <div class="pub-venue">Computational Materials Science (Elsevier)</div>
+          <div class="pub-authors">M. Harwani, J.C. Verduzco, B.H. Lee, A. Strachan</div>
+          <a href="#" class="pub-link">
+            View Paper
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS — newest first -->
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-icon teal">&#x26A1;</div>
+        <h2>Projects</h2>
+      </div>
+
+      <div class="card-grid">
+
+      <!-- nanoHUB AURA -->
+      <div class="card">
+        <div class="card-title">nanoHUB AURA</div>
+        <div class="card-meta">MULTI-AGENT SYSTEM &middot; CHEMRXIV PREPRINT</div>
+        <p class="card-desc">
+          Multi-agent research assistant that accesses 1.6M+ data points and 340+ published software tools on nanoHUB, plus HPC clusters, to perform autonomous multi-domain research across biology, physics, and nanotechnology. Produces validated, reproducible results and scales with growing scientific contributions.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">Multi-Agent</span>
+          <span class="tag">Scientific Computing</span>
+          <span class="tag">LangChain</span>
+        </div>
+        <a href="https://nanohub.org/resources/43748" target="_blank" class="pub-link" style="margin-top:12px">
+          View on nanoHUB
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <!-- FAIRmeltheas -->
+      <div class="card">
+        <div class="card-title">Accelerating Active Learning Materials Discovery</div>
+        <div class="card-meta">ACTIVE LEARNING &middot; MATERIALS SCIENCE &middot; ELSEVIER PAPER</div>
+        <p class="card-desc">
+          Active learning loop paired with public physics simulation data to accelerate materials discovery, achieving a 10x speedup in optimal alloy candidate identification. Published in Computational Materials Science, Elsevier.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Active Learning</span>
+          <span class="tag">FAIR Data</span>
+          <span class="tag">Materials Discovery</span>
+        </div>
+        <a href="https://github.com/MohnishHarwani/FAIRmeltheas" target="_blank" class="pub-link" style="margin-top:12px">
+          GitHub
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <!-- Learned Optimizers for LLM Pretraining -->
+      <div class="card">
+        <div class="card-title">Learned Optimizers for LLM Pretraining</div>
+        <div class="card-meta">META-LEARNING &middot; OPTIMIZATION</div>
+        <p class="card-desc">
+          Cost-efficient LLM pretraining using learned optimizers. Achieved a 30% performance gain versus Adam across several zero-shot tasks, improving zero-shot transfer and robustness across downstream tasks.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Meta-Learning</span>
+          <span class="tag">LLM Pretraining</span>
+          <span class="tag">PyTorch</span>
+        </div>
+      </div>
+
+      <!-- SAM-Stabilized Learned Optimizers -->
+      <div class="card">
+        <div class="card-title">SAM-Stabilized Learned Optimizers</div>
+        <div class="card-meta">META-LEARNING &middot; OPTIMIZATION</div>
+        <p class="card-desc">
+          Meta-training pipeline integrating Sharpness-Aware Minimization into learned optimizer training, improving stability and zero-shot transfer across architectures, tasks, and initializations.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SAM</span>
+          <span class="tag">Meta-Learning</span>
+          <span class="tag">PyTorch</span>
+        </div>
+      </div>
+
+      <!-- KPEvents -->
+      <div class="card">
+        <div class="card-title">KPEvents &mdash; Kaiser Permanente</div>
+        <div class="card-meta">ON-DEVICE AI &middot; iOS</div>
+        <p class="card-desc">
+          Intelligent health calendar prototype that generates personalized fitness and medication schedules using Kaiser clinical records and Apple HealthKit data. Implemented a privacy-first architecture using Apple Foundation Models with all health data processed and stored fully on-device.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Swift/SwiftUI</span>
+          <span class="tag">Apple Foundation Models</span>
+          <span class="tag">HealthKit</span>
+          <span class="tag">On-Device AI</span>
+        </div>
+      </div>
+
+      <!-- Zeroeth-Order Neural Optimizer -->
+      <div class="card">
+        <div class="card-title">Zeroeth-Order Optimization for Neural Network Training</div>
+        <div class="card-meta">OPTIMIZATION &middot; CMA-ES</div>
+        <p class="card-desc">
+          Zeroth-order gradient estimation to accelerate training and improve generalization. CMA-ES-based warmup optimizer that outperforms SGD in early training for noisy, nonconvex loss landscapes.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">CMA-ES</span>
+          <span class="tag">Zeroth-Order</span>
+          <span class="tag">Generalization</span>
+          <span class="tag">PyTorch</span>
+        </div>
+      </div>
+
+      <!-- Baselining Generalization -->
+      <div class="card">
+        <div class="card-title">Baselining Generalization of Training Algorithms</div>
+        <div class="card-meta">BENCHMARKING &middot; OPTIMIZATION</div>
+        <p class="card-desc">
+          Robust benchmarking suite to compare generalization across optimizers for neural networks. Designed evaluation protocols to measure optimizer stability, consistency, and rollout quality across diverse tasks and architectures.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Benchmarking</span>
+          <span class="tag">Optimizer Evaluation</span>
+          <span class="tag">PyTorch</span>
+        </div>
+      </div>
+
+      <!-- Adaptive Splay Tree -->
+      <div class="card">
+        <div class="card-title">Adaptive Splay Tree</div>
+        <div class="card-meta">DATA STRUCTURES</div>
+        <p class="card-desc">
+          Data structure combining Splay Trees with Hash Tables to accelerate access of nearby and recently queried information in O(log n). Exploits temporal and spatial locality to reduce amortized lookup cost.
+        </p>
+        <div class="card-tags">
+          <span class="tag">C++</span>
+          <span class="tag">Splay Tree</span>
+          <span class="tag">Hash Table</span>
+          <span class="tag">Data Structures</span>
+        </div>
+        <a href="https://github.com/MohnishHarwani/AdaptiveSplayTree" target="_blank" class="pub-link" style="margin-top:12px">
+          GitHub
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <!-- Lightweight File System -->
+      <div class="card">
+        <div class="card-title">Lightweight File System Retrieval</div>
+        <div class="card-meta">DATA STRUCTURES</div>
+        <p class="card-desc">
+          In-memory hierarchical pseudo-filesystem supporting efficient retrieval using Heaps. Implements core filesystem operations (insert, search, delete) with optimized access patterns for hierarchical data.
+        </p>
+        <div class="card-tags">
+          <span class="tag">C++</span>
+          <span class="tag">Heaps</span>
+          <span class="tag">File System</span>
+          <span class="tag">Data Structures</span>
+        </div>
+        <a href="https://github.com/MohnishHarwani/FileSystem" target="_blank" class="pub-link" style="margin-top:12px">
+          GitHub
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <!-- Graph Analysis Engine -->
+      <div class="card">
+        <div class="card-title">Graph Analysis Engine</div>
+        <div class="card-meta">ALGORITHMS</div>
+        <p class="card-desc">
+          Graph algorithms suite implementing SCC detection, maximum spanning trees, and constrained pathfinding for clustering and network optimization problems.
+        </p>
+        <div class="card-tags">
+          <span class="tag">C++</span>
+          <span class="tag">SCC</span>
+          <span class="tag">Spanning Trees</span>
+          <span class="tag">Graph Algorithms</span>
+        </div>
+        <a href="https://github.com/MohnishHarwani/WebsiteClustering_ColorWalk" target="_blank" class="pub-link" style="margin-top:12px">
+          GitHub
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <!-- Stack-Based Maze Solver -->
+      <div class="card">
+        <div class="card-title">Stack-Based Maze Solver</div>
+        <div class="card-meta">ALGORITHMS</div>
+        <p class="card-desc">
+          Stack-driven DFS and queue-based BFS traversal for generating and solving grid-based mazes. Implements both iterative deepening and breadth-first strategies for pathfinding.
+        </p>
+        <div class="card-tags">
+          <span class="tag">C++</span>
+          <span class="tag">DFS</span>
+          <span class="tag">BFS</span>
+          <span class="tag">Pathfinding</span>
+        </div>
+        <a href="https://github.com/MohnishHarwani/StackMazeSolver" target="_blank" class="pub-link" style="margin-top:12px">
+          GitHub
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <!-- Message Board -->
+      <div class="card">
+        <div class="card-title">Message Board</div>
+        <div class="card-meta">WEB APPLICATION</div>
+        <p class="card-desc">
+          Message board web application built for CS 180 at Purdue University.
+        </p>
+        <div class="card-tags">
+          <span class="tag">Java</span>
+          <span class="tag">Web App</span>
+        </div>
+        <a href="https://github.com/MohnishHarwani/MessageBoard" target="_blank" class="pub-link" style="margin-top:12px">
+          GitHub
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      </div><!-- /card-grid -->
+
   </div>
-  <div class="card">
-    <p class="card-desc">
-      I'm a graduating senior at <strong>Purdue University</strong> majoring in
-      <strong>Computer Science</strong>. My research focuses on developing better training algorithms for large
-      neural networks, and leveraging AI to accelerate scientific research.
-    </p>
-    <br>
-    <p class="card-desc">
-      Recently, I've been working with nanoHUB to develop agents that perform autonomous research
-      leveraging software tools, public data repositories, and HPC clusters. We expect our Autonomous Universal Research Assistant (AURA)
-      to be available to the public soon.
-    </p>
-    <br>
-    <p class="card-desc">
-      I've also been exploring meta-learned neural network optimizers that can
-      extract more generalizable and otherwise useful information during backpropagation.
-    </p>
-    <br>
-    <p class="card-desc">
-      Feel free to email me if you're interested in my work, hiring, or would just like to connect!
-    </p>
+  <!-- /page-research -->
+
+
+  <!-- ══ PAGE: TALKS ══ -->
+  <div class="page" id="page-talks">
+
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-icon rose">&#x1F3A4;</div>
+        <h2>Conference &amp; Workshop Presentations</h2>
+      </div>
+
+      <div class="talk-item">
+        <span class="talk-date">Feb 2026</span>
+        <div class="talk-body">
+          <div class="talk-title">AURA: Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
+          <div class="talk-venue">Materials Research and Data Alliance (MaRDA)</div>
+          <div class="talk-location">Living in the Material World</div>
+        </div>
+      </div>
+
+      <div class="talk-item">
+        <span class="talk-date">Feb 2026</span>
+        <div class="talk-body">
+          <div class="talk-title">Leveraging Public Simulation Data to Accelerate Alloy Discovery and Optimization</div>
+          <div class="talk-venue">Materials Research and Data Alliance (MaRDA)</div>
+          <div class="talk-location">Living in the Material World</div>
+        </div>
+      </div>
+
+      <div class="talk-item">
+        <span class="talk-date">Nov 2025</span>
+        <div class="talk-body">
+          <div class="talk-title">Integrating AI into nanoHUB: Toward Intelligent and Connected Scientific Workflows</div>
+          <div class="talk-venue">Google AI Summit</div>
+          <div class="talk-location">Indianapolis, IN</div>
+          <a href="AI_Summit_POSTER_nanoHUB_DM.pdf" target="_blank" class="pub-link" style="margin-top:8px">
+            Poster PDF
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="talk-item">
+        <span class="talk-date">Jun 2025</span>
+        <div class="talk-body">
+          <div class="talk-title">nanoRA: A Multi-Agent Research Assistant for Autonomous Scientific Workflows on nanoHUB</div>
+          <div class="talk-venue">AI for Materials Science (AIMS) Workshop</div>
+          <div class="talk-location">Washington, DC</div>
+          <a href="AIMS_POSTER.pdf" target="_blank" class="pub-link" style="margin-top:8px">
+            Poster PDF
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="talk-item">
+        <span class="talk-date">Dec 2024</span>
+        <div class="talk-body">
+          <div class="talk-title">The Impacts of Derivative-Free Optimization on Generalization of Neural Networks</div>
+          <div class="talk-venue">RL and Out-of-Distribution ML Workshop</div>
+          <div class="talk-location">Purdue University</div>
+        </div>
+      </div>
+    </section>
+
   </div>
-</section>
+  <!-- /page-talks -->
 
-  <!-- PROJECTS -->
-  <section class="section-block fade-section" id="projects">
-    <div class="section-header">
-      <div class="section-icon teal">&#x26A1;</div>
-      <h2>Projects</h2>
-    </div>
 
-    <div class="card">
-      <div class="card-title">nanoHUB AURA</div>
-      <div class="card-meta">CHEMRXIV PREPRINT &middot; MULTI-AGENT SYSTEM</div>
-      <p class="card-desc">
-        Large-scale LLM-powered scientific assistant that uses multi-agent systems
-        and physics-based simulation workflows to assist researchers at scale.
-        Released as a ChemRxiv preprint.
-      </p>
-      <div class="card-tags">
-        <span class="tag">LLMs</span>
-        <span class="tag">Multi-Agent</span>
-        <span class="tag">Scientific Computing</span>
+  <!-- ══ PAGE: CONTACT ══ -->
+  <div class="page" id="page-contact">
+
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-icon blue">&#x2709;</div>
+        <h2>Contact</h2>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-title">SAM-Stabilized Learned Optimizers</div>
-      <div class="card-meta">META-LEARNING &middot; OPTIMIZATION</div>
-      <p class="card-desc">
-        Meta-training pipeline integrating Sharpness-Aware Minimization into learned
-        optimizer training, improving stability and transfer across architectures,
-        tasks, and initializations.
-      </p>
-      <div class="card-tags">
-        <span class="tag">SAM</span>
-        <span class="tag">Meta-Learning</span>
-        <span class="tag">Transfer</span>
-      </div>
-    </div>
+      <div class="contact-grid">
+        <a id="email-link" class="contact-link" style="cursor:pointer">
+          <div class="contact-icon">&#x1F4E7;</div>
+          <div class="contact-text">
+            <div class="contact-label">Email</div>
+            <div class="contact-value" id="email-display">Loading...</div>
+          </div>
+        </a>
 
-    <div class="card">
-      <div class="card-title">Zeroeth-Order Neural Optimizer</div>
-      <div class="card-meta">OPTIMIZATION &middot; CMA-ES</div>
-      <p class="card-desc">
-        CMA-ES-based warmup optimizer that outperforms SGD in early training
-        for noisy, nonconvex landscapes.
-      </p>
-      <div class="card-tags">
-        <span class="tag">CMA-ES</span>
-        <span class="tag">Zeroth-Order</span>
-        <span class="tag">Warmup</span>
-      </div>
-    </div>
+        <a href="https://github.com/MohnishHarwani" target="_blank" class="contact-link">
+          <div class="contact-icon">&#x1F419;</div>
+          <div class="contact-text">
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">MohnishHarwani</div>
+          </div>
+        </a>
 
-    <div class="card">
-      <div class="card-title">KPEvents &mdash; Kaiser Permanente</div>
-      <div class="card-meta">ON-DEVICE AI &middot; HEALTH</div>
-      <p class="card-desc">
-        On-device AI-powered health calendar using Apple Foundation Models.
-        Generates personalized routines from medical records and HealthKit data
-        with strict privacy guarantees.
-      </p>
-      <div class="card-tags">
-        <span class="tag">Apple ML</span>
-        <span class="tag">HealthKit</span>
-        <span class="tag">Privacy</span>
-      </div>
-    </div>
-  </section>
+        <a href="https://linkedin.com/in/mohnish-harwani-607b50291" target="_blank" class="contact-link">
+          <div class="contact-icon">&#x1F4BC;</div>
+          <div class="contact-text">
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">mohnish-harwani</div>
+          </div>
+        </a>
 
-  <!-- PUBLICATIONS -->
-  <section class="section-block fade-section" id="publications">
-    <div class="section-header">
-      <div class="section-icon gold">&#x1F4C4;</div>
-      <h2>Publications &amp; Preprints</h2>
-    </div>
-
-    <div class="pub-card">
-      <span class="pub-year">2025</span>
-      <div class="pub-body">
-        <div class="pub-title">Accelerating Active Learning Materials Discovery with FAIR Data and Workflows: A Case Study for Alloy Melting Temperatures</div>
-        <div class="pub-venue">Computational Materials Science (Elsevier)</div>
-        <div class="pub-authors">M. Harwani, J.C. Verduzco, B.H. Lee, A. Strachan</div>
-        <a href="#" class="pub-link">
-          View Paper
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        <a href="https://scholar.google.com/citations?hl=en&user=89uO7WYAAAAJ" target="_blank" class="contact-link">
+          <div class="contact-icon">&#x1F393;</div>
+          <div class="contact-text">
+            <div class="contact-label">Google Scholar</div>
+            <div class="contact-value">View Profile</div>
+          </div>
         </a>
       </div>
-    </div>
+    </section>
 
-    <div class="pub-card">
-      <span class="pub-year">2024</span>
-      <div class="pub-body">
-        <div class="pub-title">Autonomous Universal Research Assistant (AURA): Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
-        <div class="pub-venue">ChemRxiv Preprint</div>
-        <div class="pub-authors">J.C. Verduzco, M. Harwani, D. Mejia, A. Strachan</div>
-        <a href="https://chemrxiv.org/engage/chemrxiv/article-details/691e4b62ef936fb4a28038d7" target="_blank" class="pub-link">
-          View Preprint
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- TALKS -->
-  <section class="section-block fade-section" id="talks">
-    <div class="section-header">
-      <div class="section-icon rose">&#x1F3A4;</div>
-      <h2>Conference &amp; Workshop Presentations</h2>
-    </div>
-
-    <div class="talk-item">
-      <span class="talk-date">Feb 2026</span>
-      <div class="talk-body">
-        <div class="talk-title">AURA: Agentic AI meets nanoHUB's FAIR Workflows and Data</div>
-        <div class="talk-venue">Materials Research and Data Alliance (MaRDA)</div>
-        <div class="talk-location">Living in the Material World</div>
-      </div>
-    </div>
-
-    <div class="talk-item">
-      <span class="talk-date">Feb 2026</span>
-      <div class="talk-body">
-        <div class="talk-title">Leveraging Public Simulation Data to Accelerate Alloy Discovery and Optimization</div>
-        <div class="talk-venue">Materials Research and Data Alliance (MaRDA)</div>
-        <div class="talk-location">Living in the Material World</div>
-      </div>
-    </div>
-
-    <div class="talk-item">
-      <span class="talk-date">Nov 2025</span>
-      <div class="talk-body">
-        <div class="talk-title">Integrating AI into nanoHUB: Toward Intelligent and Connected Scientific Workflows</div>
-        <div class="talk-venue">Google AI Summit</div>
-        <div class="talk-location">Indianapolis, IN</div>
-        <a href="AI_Summit_POSTER_nanoHUB_DM.pdf" target="_blank" class="pub-link" style="margin-top:8px">
-          Poster PDF
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="talk-item">
-      <span class="talk-date">Jun 2025</span>
-      <div class="talk-body">
-        <div class="talk-title">nanoRA: A Multi-Agent Research Assistant for Autonomous Scientific Workflows on nanoHUB</div>
-        <div class="talk-venue">AI for Materials Science (AIMS) Workshop</div>
-        <div class="talk-location">Washington, DC</div>
-        <a href="AIMS_POSTER.pdf" target="_blank" class="pub-link" style="margin-top:8px">
-          Poster PDF
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="talk-item">
-      <span class="talk-date">Dec 2024</span>
-      <div class="talk-body">
-        <div class="talk-title">The Impacts of Derivative-Free Optimization on Generalization of Neural Networks</div>
-        <div class="talk-venue">RL and Out-of-Distribution ML Workshop</div>
-        <div class="talk-location">Purdue University</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="section-block fade-section" id="contact">
-    <div class="section-header">
-      <div class="section-icon blue">&#x2709;</div>
-      <h2>Contact</h2>
-    </div>
-
-    <div class="contact-grid">
-      <a id="email-link" class="contact-link" style="cursor:pointer">
-        <div class="contact-icon">&#x1F4E7;</div>
-        <div class="contact-text">
-          <div class="contact-label">Email</div>
-          <div class="contact-value" id="email-display">Loading...</div>
-        </div>
-      </a>
-
-      <a href="https://github.com/MohnishHarwani" target="_blank" class="contact-link">
-        <div class="contact-icon">&#x1F419;</div>
-        <div class="contact-text">
-          <div class="contact-label">GitHub</div>
-          <div class="contact-value">MohnishHarwani</div>
-        </div>
-      </a>
-
-      <a href="https://linkedin.com/in/mohnish-harwani-607b50291" target="_blank" class="contact-link">
-        <div class="contact-icon">&#x1F4BC;</div>
-        <div class="contact-text">
-          <div class="contact-label">LinkedIn</div>
-          <div class="contact-value">mohnish-harwani</div>
-        </div>
-      </a>
-
-      <a href="https://scholar.google.com/citations?hl=en&amp;user=89uO7WYAAAAJ" target="_blank" class="contact-link">
-        <div class="contact-icon">&#x1F393;</div>
-        <div class="contact-text">
-          <div class="contact-label">Google Scholar</div>
-          <div class="contact-value">View Profile</div>
-        </div>
-      </a>
-    </div>
-  </section>
+  </div>
+  <!-- /page-contact -->
 
 </main>
 
@@ -559,7 +1054,7 @@
 </footer>
 
 <script>
-  /* Email — built in JS so Cloudflare email obfuscation cannot mangle it */
+  /* ── Email obfuscation ── */
   (function(){
     var u = 'mohhar691';
     var d = 'gmail' + '.' + 'com';
@@ -570,31 +1065,51 @@
     if (disp) disp.textContent = addr;
   })();
 
-  /* Sticky nav shadow */
+  /* ── Page routing ── */
+  var pages = ['home', 'research', 'talks', 'contact'];
+  var currentPage = 'home';
+
+  function navigate(page) {
+    if (!pages.includes(page)) page = 'home';
+
+    // Hide current
+    var oldPage = document.getElementById('page-' + currentPage);
+    if (oldPage) oldPage.classList.remove('active');
+
+    // Show new
+    var newPage = document.getElementById('page-' + page);
+    if (newPage) newPage.classList.add('active');
+
+    currentPage = page;
+
+    // Update nav active state
+    var links = document.querySelectorAll('.nav-links a[data-page]');
+    for (var i = 0; i < links.length; i++) {
+      links[i].classList.toggle('active', links[i].getAttribute('data-page') === page);
+    }
+
+    // Close mobile menu
+    document.getElementById('navLinks').classList.remove('open');
+
+    // Scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Set initial active nav link
+  navigate('home');
+
+  /* ── Sticky nav shadow ── */
   var navbar = document.getElementById('navbar');
   window.addEventListener('scroll', function(){
     navbar.classList.toggle('scrolled', window.scrollY > 10);
   });
 
-  /* Mobile menu */
+  /* ── Mobile menu ── */
   var navToggle = document.getElementById('navToggle');
   var navLinks = document.getElementById('navLinks');
   navToggle.addEventListener('click', function(){
     navLinks.classList.toggle('open');
   });
-  var anchors = navLinks.querySelectorAll('a');
-  for (var i = 0; i < anchors.length; i++) {
-    anchors[i].addEventListener('click', function(){ navLinks.classList.remove('open'); });
-  }
-
-  /* Fade-in on scroll */
-  var obs = new IntersectionObserver(function(entries){
-    for (var j = 0; j < entries.length; j++) {
-      if (entries[j].isIntersecting) entries[j].target.classList.add('visible');
-    }
-  }, { threshold: 0.08 });
-  var fadeSections = document.querySelectorAll('.fade-section');
-  for (var k = 0; k < fadeSections.length; k++) obs.observe(fadeSections[k]);
 </script>
 
 </body>
