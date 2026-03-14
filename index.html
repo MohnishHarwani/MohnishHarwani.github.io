@@ -454,12 +454,9 @@
         large-scale deep neural networks. Also researching ways to <strong>accelerate science with AI.</strong>
       </p>
       <div class="hero-cta">
-        <a href="#" onclick="navigate('contact'); return false;" class="btn btn-primary">
-          Resume Available Upon Request
-        </a>
-        <a href="#" onclick="navigate('contact'); return false;" class="btn btn-ghost">Get in Touch</a>
-        <a href="https://scholar.google.com/citations?hl=en&user=89uO7WYAAAAJ" class="btn btn-ghost" target="_blank">Google Scholar</a>
+        <a href="#" onclick="navigateAndScroll('contact'); return false;" class="btn btn-ghost">Get in Touch</a>
       </div>
+      <p style="margin-top: 16px; font-size: 0.82rem; color: rgba(250,249,246,0.45); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em;">Resume available upon request</p>
     </div>
     <div class="hero-photo">
       <img src="headshot.png" alt="Mohnish Harwani">
@@ -474,7 +471,7 @@
       <a onclick="navigate('home')" data-page="home">Home</a>
       <a onclick="navigate('research')" data-page="research">Research &amp; Projects</a>
       <a onclick="navigate('talks')" data-page="talks">Talks</a>
-      <a onclick="navigate('contact')" data-page="contact">Contact</a>
+      <a onclick="navigate('contact')" data-page="contact">Connect &amp; Profiles</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
@@ -509,7 +506,7 @@
         </p>
         <br>
         <p class="card-desc">
-          Recently, I've been working with nanoHUB to develop agents that perform autonomous research by
+          Recently, I've been working with nanoHUB to develop agents that perform autonomous research
           leveraging software tools, public data repositories, and HPC clusters. We expect our Autonomous Universal Research Assistant (AURA)
           to be available to the public soon.
         </p>
@@ -1006,7 +1003,7 @@
     <section class="section-block">
       <div class="section-header">
         <div class="section-icon blue">&#x2709;</div>
-        <h2>Contact</h2>
+        <h2>Connect &amp; Profiles</h2>
       </div>
 
       <div class="contact-grid">
@@ -1093,6 +1090,16 @@
 
     // Scroll to top of content
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function navigateAndScroll(page) {
+    navigate(page);
+    // After the page transition, scroll past the nav bar to the content
+    setTimeout(function() {
+      var navbar = document.getElementById('navbar');
+      var navH = navbar ? navbar.offsetHeight : 56;
+      window.scrollTo({ top: navH, behavior: 'smooth' });
+    }, 50);
   }
 
   // Set initial active nav link
